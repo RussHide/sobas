@@ -1,0 +1,20 @@
+{
+    "pedidos": [
+        {
+            "id": 1,
+            "cliente": "Maria Dominguez",
+            "fechaLlegada": "10-10-2022",
+            "fechaEntrega": "10-10-2022",
+            "modelo": "Samsung A22",
+            "falla": "Centro de carga"
+        },
+        {
+            "id": 2,
+            "cliente": "Fabian Dominguez",
+            "fechaLlegada": "10-10-2022",
+            "fechaEntrega": "10-10-2022",
+            "modelo": "Samsung A21",
+            "falla": "Centro de carga"
+        }
+    ]
+}
