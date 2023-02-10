@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { Toaster } from 'react-hot-toast'
-import RenglonTabla from '../../../react-controlasistencia-uadec/src/components/RenglonTabla'
-import { FiltroTexto } from './components/Filters'
+import RenglonTabla from './components/RenglonTabla'
+import { FiltroFecha, FiltroTexto } from './components/Filters'
+import ModalAdd from './components/ModalAdd'
 
 function App() {
   const [pedidos, setPedidos] = useState([])
@@ -10,8 +11,8 @@ function App() {
   const [filtros, setFiltros] = useState({
     cliente: '',
     modelo: '',
-    fechaLlegada: '',
-    fechaEntrega: '',
+    fechaLlegada: null,
+    fechaEntrega: null,
     falla: '',
     modelo: ''
   })
@@ -26,7 +27,6 @@ function App() {
     try {
       const response = await fetch('http://localhost:3000/pedidos')
       const data = await response.json()
-      console.log(data)
       setPedidos(data)
       setPedidosFiltrados(data)
     } catch (error) {
@@ -41,7 +41,6 @@ function App() {
   }, [])
 
   useEffect(() => {
-    console.log(filtros);
     /* if (filtros.cliente === 'x') {
       setFiltros(filtros => ({ ...filtros, cliente: '' }))
     }
@@ -66,7 +65,7 @@ function App() {
   return (
     <div className='max-w-screen-2xl p-10 mx-auto '>
       <Toaster />
-      {/* {modals.add.open && <ModalAdd openAdd={modals.add} setOpenAdd={setModals} fetchPedidos={fetchPedidos} />} */}
+      {modals.add.open && <ModalAdd openAdd={modals.add} setOpenAdd={setModals} fetchPedidos={fetchPedidos} />}
       {/* {modals.edit.open && <ModalEdit openEdit={modals.edit} setOpenEdit={setModals} fetchPedidos={fetchPedidos} />}
       {modals.delete.open && <ModalDelete openDelete={modals.delete} setOpenDelete={setModals} fetchPedidos={fetchPedidos} texto='El pedido se elimno con exito' />} */}
       <div>
@@ -74,8 +73,9 @@ function App() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-1 mx-auto mb-5 place-items-center items-end ">
         <FiltroTexto label="Nombre" placeholder='Buscar por cliente' name='cliente' setFiltros={setFiltros} />
-        <FiltroTexto label="Nombre" placeholder='Buscar por cliente' name='nombre' setFiltros={setFiltros} />
-        <FiltroTexto label="Nombre" placeholder='Buscar por cliente' name='nombre' setFiltros={setFiltros} />
+        <FiltroFecha setFiltros={setFiltros} fecha={filtros.fechaLlegada}  name="fechaLlegada"/>
+        <FiltroTexto label="Modelo" placeholder='Buscar por modelo' name='modelo' setFiltros={setFiltros} />
+        <FiltroTexto label="Falla" placeholder='Buscar por falla' name='falla' setFiltros={setFiltros} />
         <div className="w-full">
           <button onClick={() => setModals(prev => ({ ...prev, add: { open: true } }))} className="w-full bg-indigo-600 px-10 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">Agregar pedido</button>
         </div>
@@ -90,7 +90,7 @@ function App() {
                     <div className="w-full">
                       <div className="bg-white  rounded ">
                         <table className="min-w-max w-full table-auto">
-                          <thead className="sticky top-0 z-50">
+                          <thead className="">
                             <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal mb-10">
                               <th className="py-3 px-4 text-left">ID</th>
                               <th className="py-3 px-4 text-left">Cliente</th>

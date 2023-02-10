@@ -1,14 +1,34 @@
-import { useState } from "react"
+import { forwardRef, useState } from "react"
 import Modal from 'antd/es/modal'
-import { Input, Option, Select } from '@material-tailwind/react'
+import Input from 'antd/es/input/Input'
 import toast from "react-hot-toast";
 
+import DatePicker, { registerLocale } from "react-datepicker"
+import { CalendarIcon } from '@heroicons/react/24/solid'
+import "react-datepicker/dist/react-datepicker.css"
+import es from 'date-fns/locale/es'
+registerLocale('es', es)
+
+
+
+const CustomDatePicker = forwardRef(({ value, onClick, placeholer = '', label = '' }, ref) => (
+  <div>
+    <label htmlFor="" className="text-gray-800 font-semibold px-1 mr-4">{label}</label>
+
+    <button className='inline-flex w-full justify-between p-1 px-2  rounded-lg bg-white border border-gray-300 hover:border-blue-200 transition-colors duration-150 items-center ' onClick={onClick} ref={ref}>
+      <p className="flex justify-end text-gray-300 font-thin">
+        {!value ? placeholer : value}
+      </p>
+      <CalendarIcon className='h-5 ml-6  text-gray-300' />
+    </button>
+  </div>
+))
 
 const ModalAdd = ({ setOpenAdd, openAdd, fetchPedidos }) => {
   const [nuevoPedido, setNuevoPedido] = useState({
     cliente: '',
-    fechaLlegada: '',
-    fechaEntrega: '',
+    fechaLlegada: null,
+    fechaEntrega: null,
     modelo: '',
     falla: ''
   })
@@ -16,8 +36,6 @@ const ModalAdd = ({ setOpenAdd, openAdd, fetchPedidos }) => {
   const btnAgregarPedido = () => {
 
   }
-
-
 
   return (
     <Modal footer={[
@@ -39,20 +57,37 @@ const ModalAdd = ({ setOpenAdd, openAdd, fetchPedidos }) => {
       <div>
         <div className="flex  justify-around items-center  w-full ">
           <div className="grid  grid-cols-1 md:grid-cols-3 gap-6 w-full  p-2">
-            <div className="flex col-span-1 ">
-              <Input label="Cliente" variant="outlined"  />
+          <div className="w-full col-span-1">
+              <label className="text-gray-800 font-semibold px-1">Cliente</label>
+              <Input placeholder="" onChange={e => setNuevoPedido(prev => ({ ...prev, falla: e.target.value }))} />
             </div>
             <div className="flex col-span-1">
-              <Input label="" variant="outlined"  />
+              <DatePicker
+                className='max-w-20'
+                selected={nuevoPedido.fechaLlegada}
+                dateFormat="dd-MM-yyyy"
+                locale="es"
+                onChange={(date) => setNuevoPedido(prev => ({ ...prev, fechaLlegada: date.toLocaleDateString('sv') }))}
+                customInput={<CustomDatePicker placeholer='Seleccionar fecha' label="Fecha" />}
+              />
             </div>
             <div className="flex col-span-1">
-              <Input label="Apellido materno" variant="outlined"  />
+              <DatePicker
+                className='max-w-20'
+                selected={nuevoPedido.fechaEntrega}
+                dateFormat="dd-MM-yyyy"
+                locale="es"
+                onChange={(date) => setNuevoPedido(prev => ({ ...prev, fechaEntrega: date.toLocaleDateString('sv') }))}
+                customInput={<CustomDatePicker placeholer='Seleccionar fecha' label="Fecha" />}
+              />
             </div>
-            <div className="flex col-span-1">
-              <Input label="modelo" variant="outlined"  />
+            <div className="w-full col-span-1">
+              <label className="text-gray-800 font-semibold px-1">Modelo</label>
+              <Input placeholder="" onChange={e => setNuevoPedido(prev => ({ ...prev, modelo: e.target.value }))} />
             </div>
-            <div className="flex col-span-1">
-              <Input label="Falla" variant="outlined"  />
+            <div className="w-full col-span-1">
+              <label className="text-gray-800 font-semibold px-1">Falla</label>
+              <Input placeholder="" onChange={e => setNuevoPedido(prev => ({ ...prev, falla: e.target.value }))} />
             </div>
           </div>
         </div>
