@@ -3,18 +3,34 @@
         {
             "id": 1,
             "cliente": "Maria Dominguez",
-            "fechaLlegada": "10-10-2022",
-            "fechaEntrega": "10-10-2022",
+            "fechaLlegada": "2023-02-09",
+            "fechaEntrega": "2023-02-15",
             "modelo": "Samsung A22",
-            "falla": "Centro de carga"
+            "falla": "Centro de carga y pantalla",
+            "piezas": "1000",
+            "reparacion": "100"
+
         },
         {
             "id": 2,
             "cliente": "Fabian Dominguez",
-            "fechaLlegada": "10-10-2022",
-            "fechaEntrega": "10-10-2022",
+            "fechaLlegada": "2023-02-15",
+            "fechaEntrega": "2023-02-20",
             "modelo": "Samsung A21",
-            "falla": "Centro de carga"
+            "falla": "Centro de carga",
+            "piezas": "100",
+            "reparacion": "100"
+            
+        },
+        {
+            "id": 3,
+            "cliente": "Sebastian Ibarra",
+            "fechaLlegada": "2023-02-20",
+            "fechaEntrega": "2023-02-28",
+            "modelo": "Xiaomi Mi 9T",
+            "falla": "Cambio bateria",
+            "piezas": "300",
+            "reparacion": "500"
         }
     ]
 }

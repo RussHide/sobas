@@ -3,6 +3,7 @@ import { Toaster } from 'react-hot-toast'
 import RenglonTabla from './components/RenglonTabla'
 import { FiltroFecha, FiltroTexto } from './components/Filters'
 import ModalAdd from './components/ModalAdd'
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
 
 function App() {
   const [pedidos, setPedidos] = useState([])
@@ -11,8 +12,8 @@ function App() {
   const [filtros, setFiltros] = useState({
     cliente: '',
     modelo: '',
-    fechaLlegada: null,
-    fechaEntrega: null,
+    fechaLlegada: '',
+    fechaEntrega: '',
     falla: '',
     modelo: ''
   })
@@ -36,14 +37,19 @@ function App() {
     }
   }
 
+
   useEffect(() => {
     fetchPedidos()
   }, [])
 
   useEffect(() => {
-    /* if (filtros.cliente === 'x') {
-      setFiltros(filtros => ({ ...filtros, cliente: '' }))
+    if (filtros.fechaLlegada === null) {
+      setFiltros(filtros => ({ ...filtros, fechaLlegada: '' }))
     }
+    if (filtros.fechaEntrega === null) {
+      setFiltros(filtros => ({ ...filtros, fechaEntrega: '' }))
+    }
+    /* 
     if (filtros.abrev === 'x') {
       setFiltros(filtros => ({ ...filtros, abrev: '' }))
     }
@@ -53,12 +59,14 @@ function App() {
     if (filtros.turno === 'x') {
       setFiltros(filtros => ({ ...filtros, turno: '' }))
     } */
+    console.log(filtros)
     setPedidosFiltrados(pedidos.filter(pedido => {
       for (const [key, value] of Object.entries(filtros)) {
         if (value !== "" && !pedido[key].toLocaleLowerCase().includes(value.toLocaleLowerCase())) return false;
       }
       return true;
     }))
+    console.log(pedidosFiltrados)
   }, [filtros])
 
 
@@ -73,7 +81,8 @@ function App() {
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-1 mx-auto mb-5 place-items-center items-end ">
         <FiltroTexto label="Nombre" placeholder='Buscar por cliente' name='cliente' setFiltros={setFiltros} />
-        <FiltroFecha setFiltros={setFiltros} fecha={filtros.fechaLlegada}  name="fechaLlegada"/>
+        <FiltroFecha setFiltros={setFiltros} fecha={filtros.fechaLlegada} name="fechaLlegada" label="Fecha llegada" />
+        <FiltroFecha setFiltros={setFiltros} fecha={filtros.fechaEntrega} name="fechaEntrega" label="Fecha entrega" />
         <FiltroTexto label="Modelo" placeholder='Buscar por modelo' name='modelo' setFiltros={setFiltros} />
         <FiltroTexto label="Falla" placeholder='Buscar por falla' name='falla' setFiltros={setFiltros} />
         <div className="w-full">
@@ -98,6 +107,9 @@ function App() {
                               <th className="py-3 px-4 text-left">Fecha entrega</th>
                               <th className="py-3 px-4 text-left">Modelo</th>
                               <th className="py-3 px-4 text-left">Falla</th>
+                              <th className="py-3 px-4 text-left">Piezas</th>
+                              <th className="py-3 px-4 text-left">Reparacion</th>
+                              <th className="py-3 px-4 text-left">Total</th>
                               <th className="py-3 px-4 text-center">Opciones</th>
                             </tr>
                           </thead>
@@ -111,15 +123,18 @@ function App() {
                                   <RenglonTabla texto={pedido.fechaEntrega} />
                                   <RenglonTabla texto={pedido.modelo} />
                                   <RenglonTabla texto={pedido.falla} />
+                                  <RenglonTabla texto={`$${pedido.piezas}`} />
+                                  <RenglonTabla texto={`$${pedido.reparacion}`} />
+                                  <RenglonTabla texto={`$${Number(pedido.piezas) + Number(pedido.reparacion)}`} />
                                   <td className="py-3 px-6 text-center">
                                     <div className="flex item-center justify-center">
                                       <div
                                         className="w-4 mr-2 transform hover:text-blue-500 cursor-pointer hover:scale-110">
-                                        <button onClick={() => setOpenEdit(prev => ({ ...prev, open: true, alumno: alumno }))} />
+                                        <PencilSquareIcon onClick={() => setOpenEdit(prev => ({ ...prev, open: true, alumno: alumno }))} />
                                       </div>
                                       <div
                                         className="w-4 mr-2 transform hover:text-red-500 cursor-pointer hover:scale-110">
-                                        <button onClick={() => setOpenDelete(prev => ({ ...prev, open: true, claveBorrar: alumno.matricula }))} />
+                                        <TrashIcon onClick={() => setOpenDelete(prev => ({ ...prev, open: true, claveBorrar: alumno.matricula }))} />
                                       </div>
                                     </div>
                                   </td>

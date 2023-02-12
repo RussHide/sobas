@@ -5,7 +5,7 @@ import es from 'date-fns/locale/es'
 import Input from 'antd/es/input/Input'
 import Select from 'antd/es/select'
 import { forwardRef } from "react"
-import Radio from 'antd/es/radio'
+import { toast } from "react-hot-toast"
 const { Option } = Select
 registerLocale('es', es)
 
@@ -23,10 +23,6 @@ const CustomDatePicker = forwardRef(({ value, onClick, placeholer = '', label = 
     <div>
         <div>
             <label htmlFor="" className="text-gray-800 font-semibold px-1 mr-4">{label}</label>
-            <Radio.Group >
-                <Radio value={0}>Llegada</Radio>
-                <Radio value={1}>Entrega</Radio>
-            </Radio.Group>
         </div>
         <button className='inline-flex w-full justify-between p-1 px-2  rounded-lg bg-white border border-gray-300 hover:border-blue-200 transition-colors duration-150 items-center ' onClick={onClick} ref={ref}>
             <p className="flex justify-end text-gray-300 font-thin">
@@ -37,7 +33,7 @@ const CustomDatePicker = forwardRef(({ value, onClick, placeholer = '', label = 
     </div>
 ))
 
-export const FiltroFecha = ({ setFiltros, fecha, name }) => {
+export const FiltroFecha = ({ setFiltros, fecha, name, label }) => {
     return (
         <div className='col-span-1 w-full'>
             <DatePicker
@@ -45,8 +41,9 @@ export const FiltroFecha = ({ setFiltros, fecha, name }) => {
                 selected={Date.parse(fecha)}
                 dateFormat="dd-MM-yyyy"
                 locale="es"
+                isClearable
                 onChange={(date) => setFiltros(prev => ({ ...prev, [name]: date.toLocaleDateString('sv') }))}
-                customInput={<CustomDatePicker placeholer='Seleccionar fecha' label="Fecha" />}
+                customInput={<CustomDatePicker placeholer='Seleccionar fecha' label={label}  />}
             />
         </div>
     )
