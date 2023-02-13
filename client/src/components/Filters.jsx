@@ -38,11 +38,12 @@ export const FiltroFecha = ({ setFiltros, fecha, name, label }) => {
         <div className='col-span-1 w-full'>
             <DatePicker
                 className='max-w-20'
-                selected={Date.parse(fecha)}
+                selected={fecha}
                 dateFormat="dd-MM-yyyy"
                 locale="es"
                 isClearable
-                onChange={(date) => setFiltros(prev => ({ ...prev, [name]: date.toLocaleDateString('sv') }))}
+                clearButtonClassName="pr-8 mt-3"
+                onChange={(date) => setFiltros(prev => ({ ...prev, [name]: date === null ? '' : date }))}
                 customInput={<CustomDatePicker placeholer='Seleccionar fecha' label={label}  />}
             />
         </div>

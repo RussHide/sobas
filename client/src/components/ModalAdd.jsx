@@ -1,7 +1,8 @@
-import { forwardRef, useState } from "react"
+import { forwardRef, useEffect, useState } from "react"
 import Modal from 'antd/es/modal'
 import Input from 'antd/es/input/Input'
 import toast from "react-hot-toast";
+import axios from 'axios';
 
 import DatePicker, { registerLocale } from "react-datepicker"
 import { CalendarIcon } from '@heroicons/react/24/solid'
@@ -27,14 +28,28 @@ const CustomDatePicker = forwardRef(({ value, onClick, placeholer = '', label = 
 const ModalAdd = ({ setOpenAdd, openAdd, fetchPedidos }) => {
   const [nuevoPedido, setNuevoPedido] = useState({
     cliente: '',
-    fechaLlegada: null,
-    fechaEntrega: null,
+    fechaLlegada: '',
+    fechaEntrega: '',
     modelo: '',
+    piezas: 0,
+    reparacion: 0,
     falla: ''
   })
 
-  const btnAgregarPedido = () => {
-
+  const btnAgregarPedido = async () => {
+    try {
+      nuevoPedido.fechaLlegada = nuevoPedido.fechaLlegada.toLocaleDateString('sv')
+      nuevoPedido.fechaEntrega = nuevoPedido.fechaEntrega.toLocaleDateString('sv')
+      const response = await axios.post('http://localhost:3000/pedidos', nuevoPedido)
+      if (response.statusText === 201) {
+          toast.success('Se creo un nuevo registro con exito', { position: 'top-right', duration: 2500 })
+      }
+    } catch (error) {
+      toast.error('Hubo un error al crear el registro', { position: 'top-right', duration: 2500 })
+    }finally{
+      setOpenAdd(prev => ({ ...prev, add: { open: false } }))
+      fetchPedidos()
+    }
   }
 
   return (
@@ -49,7 +64,7 @@ const ModalAdd = ({ setOpenAdd, openAdd, fetchPedidos }) => {
           <span>Confirmar</span>
         </button>
       </div>
-    ]} className="md:min-w-fit" open={openAdd.open} onOk={btnAgregarPedido} onCancel={() => setOpenAdd(prev = ({ ...prev, add: { open: false } }))}>
+    ]} className="md:min-w-fit" open={openAdd.open} onOk={btnAgregarPedido} onCancel={() => setOpenAdd(prev => ({ ...prev, add: { open: false } }))}>
       <div className="flex flex-col items-center " >
         <h2 className="text-3xl font-semibold mb-2 text-center text-gray-800 ">Agregar pedido</h2>
         <div className="h-1 w-40 bg-blue-400 rounded  mb-4"></div>
@@ -57,9 +72,9 @@ const ModalAdd = ({ setOpenAdd, openAdd, fetchPedidos }) => {
       <div>
         <div className="flex  justify-around items-center  w-full ">
           <div className="grid  grid-cols-1 md:grid-cols-3 gap-6 w-full  p-2">
-          <div className="w-full col-span-1">
+            <div className="w-full col-span-1">
               <label className="text-gray-800 font-semibold px-1">Cliente</label>
-              <Input placeholder="" onChange={e => setNuevoPedido(prev => ({ ...prev, falla: e.target.value }))} />
+              <Input placeholder="" onChange={e => setNuevoPedido(prev => ({ ...prev, cliente: e.target.value }))} />
             </div>
             <div className="flex col-span-1">
               <DatePicker
@@ -67,7 +82,7 @@ const ModalAdd = ({ setOpenAdd, openAdd, fetchPedidos }) => {
                 selected={nuevoPedido.fechaLlegada}
                 dateFormat="dd-MM-yyyy"
                 locale="es"
-                onChange={(date) => setNuevoPedido(prev => ({ ...prev, fechaLlegada: date.toLocaleDateString('sv') }))}
+                onChange={(date) => setNuevoPedido(prev => ({ ...prev, fechaLlegada: date }))}
                 customInput={<CustomDatePicker placeholer='Seleccionar fecha' label="Fecha" />}
               />
             </div>
@@ -77,9 +92,17 @@ const ModalAdd = ({ setOpenAdd, openAdd, fetchPedidos }) => {
                 selected={nuevoPedido.fechaEntrega}
                 dateFormat="dd-MM-yyyy"
                 locale="es"
-                onChange={(date) => setNuevoPedido(prev => ({ ...prev, fechaEntrega: date.toLocaleDateString('sv') }))}
+                onChange={(date) => setNuevoPedido(prev => ({ ...prev, fechaEntrega: date }))}
                 customInput={<CustomDatePicker placeholer='Seleccionar fecha' label="Fecha" />}
               />
+            </div>
+            <div className="w-full col-span-1">
+              <label className="text-gray-800 font-semibold px-1">Precio piezas</label>
+              <Input placeholder="" onChange={e => setNuevoPedido(prev => ({ ...prev, piezas: e.target.value }))} />
+            </div>
+            <div className="w-full col-span-1">
+              <label className="text-gray-800 font-semibold px-1">Precio reparacion</label>
+              <Input placeholder="" onChange={e => setNuevoPedido(prev => ({ ...prev, reparacion: e.target.value }))} />
             </div>
             <div className="w-full col-span-1">
               <label className="text-gray-800 font-semibold px-1">Modelo</label>

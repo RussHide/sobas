@@ -12,8 +12,8 @@ function App() {
   const [filtros, setFiltros] = useState({
     cliente: '',
     modelo: '',
-    fechaLlegada: '',
-    fechaEntrega: '',
+    fechaLlegada: null,
+    fechaEntrega: null,
     falla: '',
     modelo: ''
   })
@@ -43,6 +43,7 @@ function App() {
   }, [])
 
   useEffect(() => {
+
     if (filtros.fechaLlegada === null) {
       setFiltros(filtros => ({ ...filtros, fechaLlegada: '' }))
     }
@@ -59,14 +60,12 @@ function App() {
     if (filtros.turno === 'x') {
       setFiltros(filtros => ({ ...filtros, turno: '' }))
     } */
-    console.log(filtros)
     setPedidosFiltrados(pedidos.filter(pedido => {
       for (const [key, value] of Object.entries(filtros)) {
-        if (value !== "" && !pedido[key].toLocaleLowerCase().includes(value.toLocaleLowerCase())) return false;
+        if (value !== "" && !pedido[key].toLocaleLowerCase().includes(filtros.fechaEntrega !== null || filtros.fechaLlegada !== null   ? value.toLocaleDateString('sv') : value.toLocaleLowerCase())) return false;
       }
       return true;
     }))
-    console.log(pedidosFiltrados)
   }, [filtros])
 
 
