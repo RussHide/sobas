@@ -25,7 +25,7 @@ const CustomDatePicker = forwardRef(({ value, onClick, placeholer = '', label = 
             <label htmlFor="" className="text-gray-800 font-semibold px-1 mr-4">{label}</label>
         </div>
         <button className='inline-flex w-full justify-between p-1 px-2  rounded-lg bg-white border border-gray-300 hover:border-blue-200 transition-colors duration-150 items-center ' onClick={onClick} ref={ref}>
-            <p className="flex justify-end text-gray-300 font-thin">
+            <p className={`flex justify-end ${!value ? 'text-gray-300 font-thin' : 'text-gray-900'} `}>
                 {!value ? placeholer : value}
             </p>
             <CalendarIcon className='h-5 ml-6  text-gray-300' />

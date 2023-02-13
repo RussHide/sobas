@@ -31,36 +31,6 @@
       "reparacion": "500"
     },
     {
-      "cliente": "c",
-      "fechaLlegada": "2023-02-01",
-      "fechaEntrega": "2023-02-02",
-      "modelo": "s",
-      "piezas": "1",
-      "reparacion": "2",
-      "falla": "c",
-      "id": 4
-    },
-    {
-      "cliente": "c",
-      "fechaLlegada": "2023-02-01",
-      "fechaEntrega": "2023-02-02",
-      "modelo": "s",
-      "piezas": "1",
-      "reparacion": "2",
-      "falla": "c",
-      "id": 5
-    },
-    {
-      "cliente": "sd",
-      "fechaLlegada": "2023-02-03",
-      "fechaEntrega": "2023-02-09",
-      "modelo": "asd",
-      "piezas": "123",
-      "reparacion": "123",
-      "falla": "asd",
-      "id": 6
-    },
-    {
       "cliente": "Maria",
       "fechaLlegada": "2023-02-12",
       "fechaEntrega": "2023-02-15",
@@ -69,26 +39,6 @@
       "reparacion": "250",
       "falla": "Pantalla",
       "id": 7
-    },
-    {
-      "cliente": "as",
-      "fechaLlegada": "2023-02-03",
-      "fechaEntrega": "2023-02-08",
-      "modelo": "asd",
-      "piezas": "123",
-      "reparacion": "123",
-      "falla": "asd",
-      "id": 8
-    },
-    {
-      "cliente": "asd",
-      "fechaLlegada": "2023-02-02",
-      "fechaEntrega": "2023-02-01",
-      "modelo": "asd",
-      "piezas": "123",
-      "reparacion": "123",
-      "falla": "asd",
-      "id": 9
     },
     {
       "cliente": "Soplas",

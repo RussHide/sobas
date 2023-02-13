@@ -3,6 +3,8 @@ import { Toaster } from 'react-hot-toast'
 import RenglonTabla from './components/RenglonTabla'
 import { FiltroFecha, FiltroTexto } from './components/Filters'
 import ModalAdd from './components/ModalAdd'
+import ModalDelete from './components/ModalDelete'
+import ModalEdit from './components/ModalEdit'
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid'
 
 function App() {
@@ -20,7 +22,7 @@ function App() {
   const [modals, setModals] = useState({
     add: { open: false },
     edit: { open: false },
-    delete: { open: false }
+    delete: { open: false, key: null }
   })
 
   const fetchPedidos = async () => {
@@ -62,7 +64,7 @@ function App() {
     } */
     setPedidosFiltrados(pedidos.filter(pedido => {
       for (const [key, value] of Object.entries(filtros)) {
-        if (value !== "" && !pedido[key].toLocaleLowerCase().includes(filtros.fechaEntrega !== null || filtros.fechaLlegada !== null   ? value.toLocaleDateString('sv') : value.toLocaleLowerCase())) return false;
+        if (value !== "" && !pedido[key].toLocaleLowerCase().includes(filtros.fechaEntrega !== null || filtros.fechaLlegada !== null ? value.toLocaleDateString('sv') : value.toLocaleLowerCase())) return false;
       }
       return true;
     }))
@@ -73,8 +75,8 @@ function App() {
     <div className='max-w-screen-2xl p-10 mx-auto '>
       <Toaster />
       {modals.add.open && <ModalAdd openAdd={modals.add} setOpenAdd={setModals} fetchPedidos={fetchPedidos} />}
-      {/* {modals.edit.open && <ModalEdit openEdit={modals.edit} setOpenEdit={setModals} fetchPedidos={fetchPedidos} />}
-      {modals.delete.open && <ModalDelete openDelete={modals.delete} setOpenDelete={setModals} fetchPedidos={fetchPedidos} texto='El pedido se elimno con exito' />} */}
+      {modals.edit.open && <ModalEdit openEdit={modals.edit} setModals={setModals} fetchPedidos={fetchPedidos} />}
+      {modals.delete.open && <ModalDelete openDelete={modals.delete} setModals={setModals} fetchPedidos={fetchPedidos} texto='El pedido se elimno con exito' />}
       <div>
         <h2 className="text-3xl font-semibold mb-2  text-gray-800 ">Todos los Pedidos</h2>
       </div>
@@ -129,11 +131,11 @@ function App() {
                                     <div className="flex item-center justify-center">
                                       <div
                                         className="w-4 mr-2 transform hover:text-blue-500 cursor-pointer hover:scale-110">
-                                        <PencilSquareIcon onClick={() => setOpenEdit(prev => ({ ...prev, open: true, alumno: alumno }))} />
+                                        <PencilSquareIcon onClick={() => setModals(prev => ({ ...prev, edit: { open: true, pedido: pedido } }))} />
                                       </div>
                                       <div
                                         className="w-4 mr-2 transform hover:text-red-500 cursor-pointer hover:scale-110">
-                                        <TrashIcon onClick={() => setOpenDelete(prev => ({ ...prev, open: true, claveBorrar: alumno.matricula }))} />
+                                        <TrashIcon onClick={() => setModals(prev => ({ ...prev, delete: { open: true, key: pedido.id } }))} />
                                       </div>
                                     </div>
                                   </td>
