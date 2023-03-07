@@ -44,7 +44,7 @@ export const FiltroFecha = ({ setFiltros, fecha, name, label }) => {
                 isClearable
                 clearButtonClassName="pr-8 mt-3"
                 onChange={(date) => setFiltros(prev => ({ ...prev, [name]: date === null ? '' : date }))}
-                customInput={<CustomDatePicker placeholer='Seleccionar fecha' label={label}  />}
+                customInput={<CustomDatePicker placeholer='Seleccionar fecha' label={label} />}
             />
         </div>
     )

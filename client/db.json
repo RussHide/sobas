@@ -3,18 +3,18 @@
     {
       "id": 1,
       "cliente": "Maria Dominguez",
-      "fechaLlegada": "2023-02-09",
-      "fechaEntrega": "2023-02-15",
+      "fechaLlegada": "2023-02-26",
+      "fechaEntrega": "5/2/2023",
       "modelo": "Samsung A22",
-      "falla": "Centro de carga y pantalla",
-      "piezas": "1000",
-      "reparacion": "100"
+      "falla": "Limpieza",
+      "piezas": "10",
+      "reparacion": "5"
     },
     {
       "id": 2,
       "cliente": "Fabian Dominguez",
-      "fechaLlegada": "2023-02-15",
-      "fechaEntrega": "2023-02-20",
+      "fechaLlegada": "2023-02-03",
+      "fechaEntrega": "10-02-2023",
       "modelo": "Samsung A21",
       "falla": "Centro de carga",
       "piezas": "100",
@@ -39,16 +39,6 @@
       "reparacion": "250",
       "falla": "Pantalla",
       "id": 7
-    },
-    {
-      "cliente": "Soplas",
-      "fechaLlegada": "2023-02-12",
-      "fechaEntrega": "2023-02-15",
-      "modelo": "Xiaomi",
-      "piezas": "1200",
-      "reparacion": "400",
-      "falla": "Pantalla",
-      "id": 10
     }
   ]
 }

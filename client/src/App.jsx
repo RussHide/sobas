@@ -52,19 +52,9 @@ function App() {
     if (filtros.fechaEntrega === null) {
       setFiltros(filtros => ({ ...filtros, fechaEntrega: '' }))
     }
-    /* 
-    if (filtros.abrev === 'x') {
-      setFiltros(filtros => ({ ...filtros, abrev: '' }))
-    }
-    if (filtros.semestre === 'x') {
-      setFiltros(filtros => ({ ...filtros, semestre: '' }))
-    }
-    if (filtros.turno === 'x') {
-      setFiltros(filtros => ({ ...filtros, turno: '' }))
-    } */
     setPedidosFiltrados(pedidos.filter(pedido => {
       for (const [key, value] of Object.entries(filtros)) {
-        if (value !== "" && !pedido[key].toLocaleLowerCase().includes(filtros.fechaEntrega !== null || filtros.fechaLlegada !== null ? value.toLocaleDateString('sv') : value.toLocaleLowerCase())) return false;
+        if (value !== "" && !pedido[key].toLocaleLowerCase().includes(key === 'fechaEntrega' || key === 'fechaLlegada' ? value.toLocaleDateString('sv') : value.toLocaleLowerCase())) return false;
       }
       return true;
     }))

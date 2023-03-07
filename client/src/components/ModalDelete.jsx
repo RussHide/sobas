@@ -24,7 +24,7 @@ const ModalDelete = ({ openDelete, fetchPedidos, setModals, texto }) => {
             onClick={() => setModals(prev => ({ ...prev, delete: {open: false, key: null} }))}
             className="mr-1 bg-red-400 hover:bg-red-600 text-white px-8 md:px-14 py-1 rounded-xl "
           >
-            <span>Cancelar{openDelete.key}</span>
+            <span>Cancelar</span>
           </button>
           <button className=' bg-green-400 hover:bg-green-600 text-white px-8 md:px-14 py-1 rounded-xl ' onClick={btnEliminar}>
             <span>Confirmar</span>
